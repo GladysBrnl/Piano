@@ -7,10 +7,8 @@ class Tableau1 extends Phaser.Scene{
      * Précharge les assets
      */
     preload(){
-        this.load.image("fond","assets/fond.jpg");
-        this.load.image("carre","assets/carre.png");
-        this.load.image("triangle","assets/triangle.png");
-        this.load.image("croix","assets/croix.png");
+        this.load.image("fond","assets/fondnoir.png");
+        this.load.image("man","assets/man_1.png");
     }
 
     /**
@@ -73,6 +71,7 @@ class Tableau1 extends Phaser.Scene{
         this.carre=this.add.image(100,300,"carre");
         this.croix=this.add.image(300,300,"croix");
         this.triangle=this.add.image(500,300,"triangle");
+        this.man=this.add.image(550,300,"man");
         this.carre.blendMode=Phaser.BlendModes.ADD;
         this.croix.blendMode=Phaser.BlendModes.ADD;
         this.triangle.blendMode=Phaser.BlendModes.ADD;
@@ -135,117 +134,31 @@ class Tableau1 extends Phaser.Scene{
 
         //------------couleurs---------------
 
-        //carré
+
         if(lettre==="a"){
-            this.bounce(this.carre);
-            this.carre.clearTint();
+
+            this.man.clearTint();
         }
         if(lettre==="z"){
-            this.bounce(this.carre);
-            this.carre.setTintFill(0xFF0000);
+
+            this.man.setTintFill(0xFF0000);
         }
         if(lettre==="e"){
-            this.bounce(this.carre);
-            this.carre.setTintFill(0x00FF00);
+
+            this.man.setTintFill(0x00FF00);
         }
         if(lettre==="r"){
-            this.bounce(this.carre);
-            this.carre.setTintFill(0x0000FF);
+
+            this.man.setTintFill(0x0000FF);
         }
 
-        // croix
-        if(lettre==="q"){
-            this.bounce(this.croix);
-            this.croix.clearTint();
-        }
-        if(lettre==="s"){
-            this.bounce(this.croix);
-            this.croix.setTintFill(0x996600);
-        }
-        if(lettre==="d"){
-            this.bounce(this.croix);
-            this.croix.setTintFill(0x669900);
-        }
-        if(lettre==="f"){
-            this.bounce(this.croix);
-            this.croix.setTintFill(0x006699);
-        }
-
-        // triangle
-        if(lettre==="w"){
-            this.bounce(this.triangle);
-            this.triangle.clearTint();
-        }
-        if(lettre==="x"){
-            this.bounce(this.triangle);
-            this.triangle.setTintFill(0x990066);
-        }
-        if(lettre==="c"){
-            this.bounce(this.triangle);
-            this.triangle.setTintFill(0x009966);
-        }
-        if(lettre==="v"){
-            this.bounce(this.triangle);
-            this.triangle.setTintFill(0x660099);
-        }
 
         //simple feedback & changement de sens géré par actif dans update()
         if(lettre==="t"){
-            this.bounce(this.carre);
-        }
-        if(lettre==="g"){
-            this.bounce(this.croix);
-        }
-        if(lettre==="b"){
-            this.bounce(this.triangle);
-        }
-        //simple feedback & clignottement géré par actif dans update()
-        if(lettre==="y"){
-            this.bounce(this.carre);
-        }
-        if(lettre==="h"){
-            this.bounce(this.croix);
-        }
-        if(lettre==="n"){
-            this.bounce(this.triangle);
+            this.bounce(this.man);
         }
 
 
-        //changements de composition
-        if(lettre==="u"){
-            this.bounceAll();
-            this.compositionU();
-        }
-        if(lettre==="i"){
-            this.bounceAll();
-            this.compositionI();
-        }
-        if(lettre==="o"){
-            this.bounceAll();
-            this.compositionO();
-        }
-        if(lettre==="p"){
-            this.bounceAll();
-            this.compositionP();
-        }
-
-        //changement de vitesse
-        if(lettre==="j"){
-            this.bounceAll();
-            this.vitesse=9;
-        }
-        if(lettre==="k"){
-            this.bounceAll();
-            this.vitesse=6;
-        }
-        if(lettre==="l"){
-            this.bounceAll();
-            this.vitesse=3;
-        }
-        if(lettre==="m"){
-            this.bounceAll();
-            this.vitesse=1;
-        }
     }
 
     /**
@@ -276,46 +189,6 @@ class Tableau1 extends Phaser.Scene{
                 touche.setColor("#FFFFFF")
             }
 
-            //--- interaction sur les formes ---
-
-            //faire clignotter ou pas
-            if(touche.actif) {
-                if(lettre === "y"){
-                    this.carre.alpha = Phaser.Math.Between(0, 100) / 100;
-                }
-                if(lettre === "h"){
-                    this.croix.alpha = Phaser.Math.Between(0, 100) / 100;
-                }
-                if(lettre === "n"){
-                    this.triangle.alpha = Phaser.Math.Between(0, 100) / 100;
-                }
-            }else{
-                if(lettre === "y"){
-                    this.carre.alpha = 1;
-                }
-                if(lettre === "h"){
-                    this.croix.alpha = 1;
-                }
-                if(lettre === "n"){
-                    this.triangle.alpha = 1;
-                }
-            }
-
-            //faire tourner dans quel sens et à quelle vitesse ?
-            let sens=1;
-            if(touche.actif) {
-                sens=-1;
-            }
-            if(lettre==="t") {
-                this.carre.rotation += 0.01 * this.vitesse * sens;
-            }
-            if(lettre==="g") {
-                this.croix.rotation += 0.02 * this.vitesse * sens;
-            }
-            if(lettre==="b") {
-                this.triangle.rotation += 0.03 * this.vitesse * sens;
-            }
-
         }
     }
 
@@ -334,132 +207,5 @@ class Tableau1 extends Phaser.Scene{
             scale:actualScale
         })
     }
-    /**
-     * Fait rebondir les 3 formes
-     */
-    bounceAll(){
-        this.bounce(this.carre);
-        this.bounce(this.croix);
-        this.bounce(this.triangle);
-    }
-
-    /**
-     * Applique une composition
-     */
-    compositionU(){
-        this.tweens.add({
-            targets:this.carre,
-            duration:500,
-            x:300,
-            y:300,
-            scale:1,
-            ease:Phaser.Math.Easing.Bounce.Out
-        });
-        this.tweens.add({
-            targets:this.croix,
-            duration:500,
-            x:300,
-            y:300,
-            scale:1,
-            ease:Phaser.Math.Easing.Bounce.Out
-        });
-        this.tweens.add({
-            targets:this.triangle,
-            duration:500,
-            x:300,
-            y:300,
-            scale:1,
-            ease:Phaser.Math.Easing.Bounce.Out
-        });
-    }
-    /**
-     * Applique une composition
-     */
-    compositionI(){
-        this.tweens.add({
-            targets:this.carre,
-            duration:500,
-            x:300,
-            y:300,
-            scale:0.5,
-            ease:Phaser.Math.Easing.Bounce.Out
-        });
-        this.tweens.add({
-            targets:this.croix,
-            duration:500,
-            x:300,
-            y:300,
-            scale:1,
-            ease:Phaser.Math.Easing.Bounce.Out
-        });
-        this.tweens.add({
-            targets:this.triangle,
-            duration:500,
-            x:300,
-            y:300,
-            scale:2,
-            ease:Phaser.Math.Easing.Bounce.Out
-        });
-    }
-    /**
-     * Applique une composition
-     */
-    compositionO(){
-        this.tweens.add({
-            targets:this.carre,
-            duration:500,
-            x:300,
-            y:300,
-            scale:2,
-            ease:Phaser.Math.Easing.Bounce.Out
-        });
-        this.tweens.add({
-            targets:this.croix,
-            duration:500,
-            x:300,
-            y:300,
-            scale:1,
-            ease:Phaser.Math.Easing.Bounce.Out
-        });
-        this.tweens.add({
-            targets:this.triangle,
-            duration:500,
-            x:300,
-            y:300,
-            scale:0.5,
-            ease:Phaser.Math.Easing.Bounce.Out
-        });
-    }
-
-    /**
-     * Applique une composition
-     */
-    compositionP(){
-        this.tweens.add({
-            targets:this.carre,
-            duration:500,
-            x:100,
-            y:300,
-            scale:1,
-            ease:Phaser.Math.Easing.Bounce.Out
-        });
-        this.tweens.add({
-            targets:this.croix,
-            duration:500,
-            x:300,
-            y:300,
-            scale:1,
-            ease:Phaser.Math.Easing.Bounce.Out
-        });
-        this.tweens.add({
-            targets:this.triangle,
-            duration:500,
-            x:500,
-            y:300,
-            scale:1,
-            ease:Phaser.Math.Easing.Bounce.Out
-        });
-    }
-
 
 }
